@@ -1,17 +1,9 @@
 //console.log ("Hello");
-// we will ask the user to enter one of rock/ paper/ scissors and then check if the entry is valid. we will need to check case, so convert to lowercase and then check. 
-// once user entry is valid, we will ask computerplay function to generate a random item
-// computerPlay, will generate a random number between 1 and 3 and depending on the number we can assign a number to rok paper of scissors. 
-// we call a function playRound with the 2 entries, this function needs to return the winning statement, You Lose! Paper beats Rock,  we will then run a switch and depending on the two selections we can publish the results. 
-
-
-//let result = playRound(playerSelection,computerSelection); moved to game function 
-//console.log (playerSelection);
-//console.log (computerSelection);
-//console.log (result);
 let resultCount;
 game ();
 
+//this is the main function and it has a loop inside to run the function 5 times. 
+//There is a counter which gets updated with each result, resultCount, this is for checking and displaying end result.  
 function game() {
     let result;
     let playerSelection; 
@@ -40,19 +32,20 @@ function game() {
 function getPlayerData () {
     let data = prompt("Enter one of rock, paper, scissors");
     data = data.toLowerCase();
-// check if the data is valid 
-if (data === "rock" || data === "paper" || data === "scissors") {
-    return data;
-} else {
-    alert("Wrong Entry");
-    data = getPlayerData();
-    return data;
-}
+// checking if the data is valid, else re-running the function recurssively 
+// changed playerSelection to lowercase so that we can check the data without case issue
+    if (data === "rock" || data === "paper" || data === "scissors") {
+        return data;
+    } else {
+        alert("Wrong Entry");
+        data = getPlayerData();
+        return data;
+    }
 }
 
+//generated a random number and then assigned the number to one of rock paper scissors
 function getComputerData () {
     let ranNum = Math.floor(Math.random()*3);
-
     switch(ranNum) {
         case 0:
             return "rock";
@@ -66,46 +59,46 @@ function getComputerData () {
 }
 
 
+//checks and returns the results, also updates the global resultCount variable to keep count of overall result.
 function playRound (playerSelection,computerSelection) {
-    
-if (playerSelection === computerSelection) {
-    return "Tie Result, both chose " + playerSelection;
-} else {
-    switch (playerSelection) {
-        case "rock":
-            if(computerSelection == "scissors") {
-                resultCount++;
-                return "You won, " + playerSelection + " beats " + computerSelection;
-                
-            } else {
-                resultCount--;
-                return "You lost, " + computerSelection + " beats " + playerSelection;
-                
+    playerSelection === computerSelection ? 
+    () => {return "Tie Result, both chose " + playerSelection } : 
+    () => {
+            switch (playerSelection) {
+                case "rock":
+                    if(computerSelection == "scissors") {
+                        resultCount++;
+                        return "You won, " + playerSelection + " beats " + computerSelection;
+                        
+                    } else {
+                        resultCount--;
+                        return "You lost, " + computerSelection + " beats " + playerSelection;
+                        
+                    }
+                    break;
+                case "paper":
+                    if(computerSelection == "rock") {
+                        resultCount++;
+                        return "You won, " + playerSelection + " beats " + computerSelection;
+                        
+                    } else {
+                        resultCount--;
+                        return "You lost, " + computerSelection + " beats " + playerSelection;
+                        
+                    }
+                    break;
+                case "scissors":
+                    if(computerSelection == "paper") {
+                        resultCount++;
+                        return "You won, " + playerSelection + " beats " + computerSelection;
+                        
+                    } else {
+                        resultCount--;  
+                        return "You lost, " + computerSelection + " beats " + playerSelection;
+                        
+                    }
+                    break;
+                }
             }
-            break;
-         case "paper":
-            if(computerSelection == "rock") {
-                resultCount++;
-                return "You won, " + playerSelection + " beats " + computerSelection;
-                
-            } else {
-                resultCount--;
-                return "You lost, " + computerSelection + " beats " + playerSelection;
-                
-            }
-            break;
-         case "scissors":
-            if(computerSelection == "paper") {
-                resultCount++;
-                return "You won, " + playerSelection + " beats " + computerSelection;
-                
-            } else {
-                resultCount--;  
-                return "You lost, " + computerSelection + " beats " + playerSelection;
-                
-            }
-            break;
-    }
-}
 
 }
