@@ -3,6 +3,7 @@ let resultCount;
 //pElement.textContent = "Results";
 //console.log(pElement);
 const para = document.querySelector('.para');
+const finalResult =document.querySelector('.finalResult')
 
 game ();
 
@@ -29,11 +30,15 @@ function game() {
 
     if (resultCount === 0) {
         console.log("End Results was a Tie");
+        result = "End result: A Tie";
     } else if ( resultCount > 0 ) {
         console.log("You won " + resultCount + " more games than computer");
+        result = "You won " + resultCount + " more games than computer";
     } else { 
         console.log("You lost: Computer won " + resultCount*(-1) + " more games than you");
+        result = "You lost: Computer won " + resultCount*(-1) + " more games than you";
     }
+    finalResult.innerHTML = "<strong>" + result + "</strong>";
 }
 
 
