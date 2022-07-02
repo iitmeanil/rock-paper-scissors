@@ -1,5 +1,9 @@
-//console.log ("Hello");
+console.log ("Hello");
 let resultCount;
+//pElement.textContent = "Results";
+//console.log(pElement);
+const para = document.querySelector('.para');
+
 game ();
 
 //this is the main function and it has a loop inside to run the function 5 times. 
@@ -9,14 +13,18 @@ function game() {
     let playerSelection; 
     let computerSelection;
     resultCount = 0;
-    console.log (resultCount);
+    //console.log (resultCount);
 
     for (i = 0; i< 5; i++) {
         playerSelection = getPlayerData(); 
         computerSelection = getComputerData();
+        //console.log(playerSelection);
+        //console.log(computerSelection);
         result = playRound(playerSelection,computerSelection); 
         console.log (result);
-        console.log (resultCount);
+        para.innerHTML = para.innerHTML + "<p>" + (i + 1) + ". " + result + "</p>";
+
+        //console.log (resultCount);
     };
 
     if (resultCount === 0) {
@@ -61,17 +69,19 @@ function getComputerData () {
 
 //checks and returns the results, also updates the global resultCount variable to keep count of overall result.
 function playRound (playerSelection,computerSelection) {
-    playerSelection === computerSelection ? 
-    () => {return "Tie Result, both chose " + playerSelection } : 
-    () => {
+    if(playerSelection === computerSelection) { 
+        return "Tie Result, both chose " + playerSelection;
+    } else {
             switch (playerSelection) {
                 case "rock":
                     if(computerSelection == "scissors") {
                         resultCount++;
+                        //console.log("You won, " + playerSelection + " beats " + computerSelection);
                         return "You won, " + playerSelection + " beats " + computerSelection;
                         
                     } else {
                         resultCount--;
+                        //console.log("You lost, " + computerSelection + " beats " + playerSelection);
                         return "You lost, " + computerSelection + " beats " + playerSelection;
                         
                     }
@@ -100,5 +110,5 @@ function playRound (playerSelection,computerSelection) {
                     break;
                 }
             }
-
+ 
 }
