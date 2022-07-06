@@ -27,6 +27,7 @@ function game() {
 
         //console.log (resultCount);
     };
+    
 
     if (resultCount === 0) {
         console.log("End Results was a Tie");
