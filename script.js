@@ -1,45 +1,64 @@
 console.log ("Hello");
 let resultCount;
+let computerScore = 0;
+let playerScore = 0;
 //pElement.textContent = "Results";
 //console.log(pElement);
 const para = document.querySelector('.para');
-const finalResult =document.querySelector('.finalResult')
+const finalResult = document.querySelector('.finalResult')
 
-game ();
+// new code
 
-//this is the main function and it has a loop inside to run the function 5 times. 
-//There is a counter which gets updated with each result, resultCount, this is for checking and displaying end result.  
-function game() {
-    let result;
-    let playerSelection; 
-    let computerSelection;
-    resultCount = 0;
-    //console.log (resultCount);
+    const choices = document.querySelectorAll(".choice");
+    choices.forEach ((choice) => {
+    choice.addEventListener("click",game);
+    })
 
-    for (i = 0; i< 5; i++) {
-        playerSelection = getPlayerData(); 
-        computerSelection = getComputerData();
-        //console.log(playerSelection);
-        //console.log(computerSelection);
-        result = playRound(playerSelection,computerSelection); 
-        console.log (result);
-        para.innerHTML = para.innerHTML + "<p>" + (i + 1) + ". " + result + "</p>";
 
-        //console.log (resultCount);
-    };
+    
     
 
-    if (resultCount === 0) {
-        console.log("End Results was a Tie");
-        result = "End result: A Tie";
-    } else if ( resultCount > 0 ) {
-        console.log("You won " + resultCount + " more games than computer");
-        result = "You won " + resultCount + " more games than computer";
-    } else { 
-        console.log("You lost: Computer won " + resultCount*(-1) + " more games than you");
-        result = "You lost: Computer won " + resultCount*(-1) + " more games than you";
+
+
+// whenever a user clicks on one of the three boxes, the game starts by calling the function game()
+// game function takes the event and extracts the class id and allocates it for player choice. 
+
+
+  
+function game(e) {
+    let classes = e.target.className.split(" ");
+    let result;
+    let playerSelection = classes[1];
+    let computerSelection = getComputerData();;
+    //resultCount = 0;
+    console.log(playerSelection);
+    console.log(computerSelection);
+
+  
+
+    result = playRound(playerSelection,computerSelection); 
+    finalResult.innerHTML += "<br>" + result;
+    console.log (result);
+    para.textContent = `YourScore: ${playerScore}; Computer: ${computerScore}`
+    //para.innerHTML = para.innerHTML + "<p>" + (i + 1) + ". " + result + "</p>";
+    
+    //game ends when one of the score reaches 5
+    if (computerScore === 5 || playerScore === 5) {
+        if (computerScore === playerScore) {
+            console.log("End Results was a Tie");
+            result = "End result: A Tie";
+        } else if ( playerScore > computerScore ) {
+            console.log("You won " + (playerScore - computerScore) + " more games than computer");
+            result = "You won " + (playerScore - computerScore) + " more games than computer";
+        } else { 
+            console.log("You lost: Computer won " + (playerScore - computerScore)*(-1) + " more games than you");
+            result = "You lost: Computer won " + (playerScore - computerScore)*(-1) + " more games than you";
+        }
+        finalResult.innerHTML += "<br>" + "<br>" + "<strong>" + result + "</strong>";
+        choices.forEach ((choice) => {
+            choice.removeEventListener('click',game)
+            })
     }
-    finalResult.innerHTML = "<strong>" + result + "</strong>";
 }
 
 
@@ -81,12 +100,12 @@ function playRound (playerSelection,computerSelection) {
             switch (playerSelection) {
                 case "rock":
                     if(computerSelection == "scissors") {
-                        resultCount++;
+                        playerScore++;
                         //console.log("You won, " + playerSelection + " beats " + computerSelection);
                         return "You won, " + playerSelection + " beats " + computerSelection;
                         
                     } else {
-                        resultCount--;
+                        computerScore++;
                         //console.log("You lost, " + computerSelection + " beats " + playerSelection);
                         return "You lost, " + computerSelection + " beats " + playerSelection;
                         
@@ -94,22 +113,22 @@ function playRound (playerSelection,computerSelection) {
                     break;
                 case "paper":
                     if(computerSelection == "rock") {
-                        resultCount++;
+                        playerScore++;
                         return "You won, " + playerSelection + " beats " + computerSelection;
                         
                     } else {
-                        resultCount--;
+                        computerScore++;
                         return "You lost, " + computerSelection + " beats " + playerSelection;
                         
                     }
                     break;
                 case "scissors":
                     if(computerSelection == "paper") {
-                        resultCount++;
+                        playerScore++;
                         return "You won, " + playerSelection + " beats " + computerSelection;
                         
                     } else {
-                        resultCount--;  
+                        computerScore++;  
                         return "You lost, " + computerSelection + " beats " + playerSelection;
                         
                     }
